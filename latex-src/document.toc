@@ -1,0 +1,4 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {1}{Type Theory and Curry-Howard Isomorphism}{2}{0}{1}
+\beamer@sectionintoc {2}{Dependent Types theory}{21}{0}{2}
+\beamer@sectionintoc {3}{Idris Programming language}{26}{0}{3}

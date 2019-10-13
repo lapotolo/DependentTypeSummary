@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section 3
+\section{Idris Programming language}
+% or programming with dependent types
+\begin{frame}
+\begin{center}\textbf{[SECTION 3]}\end{center}
+\includegraphics[height=.5\textwidth,width=1\textwidth]{img/idris_logo.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Idris - Haskell with dependent types?}
+Idris is a \textbf{general purpose functional language} \\
+\begin{itemize}
+\item It means it is basically similar to standard most used functional languages (Haskell, ML-Family)
+\item It has an almost equal syntax to Haskell, the entry point of a program is called main,
+IO is managed with a monad and there is do notation.
+\item Unlike Haskell the evaluation is aeger and all top-level functions must have a type signature.\\ 
+(This is due to type inference being, in general, undecidable for languages with dependent types.)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Idris is built on a tiny codebase}
+The kernel of the IDRIS implementation consists of
+\begin{itemize}
+	\item a type checker (with a totality checker embedded in it)
+	\item an evaluator for the intermediate language TT	
+	\item a pattern match compiler
+\end{itemize}
+This core is implemented in less than 1000 lines of Haskell code.\\
+It is important that this kernel remains small because the correctness of the language implementation relies on the correctness of the underlying type system.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{One syntax for two sorts}
+Idris provides full dependent types native support.\\ \medskip
+The core of the idea is that types are first order citizens of the language, \textbf{types can be computed from any expression}.
+\\ \medskip
+The language of the run-time system and the language of the type system are one and the same.\\
+There is no difference in what kind of expressions we are allowed to write in function definitions and in function signatures.
+\end{frame}
+
+\begin{frame}
+\frametitle{A simple example of type computations}
+We can use types in expressions and therefore write functions that calculate types.\\
+\idrisinput{my-code/type-calculus-1.idr}
+\pause
+Using this, we can write a function where \textbf{the return type is calculated} depending on an input value.
+\idrisinput{my-code/type-calculus-2.idr}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dependent types checker needs total functions}
+Idris distinguishes between total and partial functions.\\ \medskip
+A total function is a function that either:
+\begin{itemize}
+  \item Terminates for all possible inputs.
+  \item Produces a non-empty, finite, prefix of a possibly infinite result.
+\end{itemize}
+Totality is required to have a terminating type checking. \textbf{(*)}
+\\ \medskip
+And a \textbf{terminating type checking implies that}, due to the Curry Howard isomorphism, \textbf{we can consider types as proofs} that our functions are correct.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Idris type checker and Totality}
+It is best to consider type-level functions in exactly the same way as ordinary functions.
+\\ \medskip
+There are a couple of technical differences that are useful to know about:
+\begin{itemize}
+	\item Type-level functions exist at compile time only.
+	\item Only total functions will be evaluated at type level.
+\end{itemize}
+\medskip
+Idris, to ensure that type-checking itself terminates even in real world cases, treats functions that are not total as constants at the type level, leaving the programmer with some unverified code.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The standard hello world of dependent types: Vectors}
+\idrisinput{my-code/vect.idr}
+\medskip
+This declares a  \textbf{family of types}.\\
+\textbf{Vect is indexed over Nat and parametrised by Type}.
+\\ \medskip
+Following the style of Haskell with GADT support,\\
+we explicitly state the type of the type constructors:\\ 
+Vect takes a Nat and a type as an argument, where Type stands for the type of types.\\
+
+Each data constructor targets a different part of the family of types.\\
+% Nil can only be used to construct vectors with zero length.\\
+% (::) to construct vectors with non-zero length.\\
+% In the type of ::, we state explicitly that an element of type a and a tail of type Vect k a (i.e., a vector of length k) combine to make a vector of length S k. 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Function on Vectors - You do not need to test everything}
+\idrisinput{my-code/append.idr}
+The type checkers guarantees that the invariants we might expect by the standard semantics of an append function always hold by \textbf{performing simple arithmetical computations at static time}.\\
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Exploiting the knowledge given from expressive types}
+Because terms of type Vect carry their length as part of their type, the type checker has additional knowledge that it can use to check that operations are implemented and used correctly. \\ \medskip
+If we wish to look up an element in a Vect you can know at compile time that the location cannot be out of bounds when the program is run.
+\end{frame}
+
+\begin{frame}
+\frametitle{The type of finite sets}
+To implement a type safe lookup we can define the type Fin.
+\idrisinput{my-code/fin.idr}
+This is the dependent type of finite sets in the sense of\\ "the canonical set of n unnamed elements".\\ \medskip
+Effectively, it is a type that captures integers that fall into the range from 0 to (n - 1).
+\end{frame}
+
+\begin{frame}
+\frametitle{Using Fin to access a Vect}
+Now we can use Fin to define a type-safe indexing operation into a vector, where only values less than the length of the vector are allowed as indices:
+\idrisinput{my-code/index.idr}
+Note that we do not even need to use Maybe in the return type since we are guaranteed a result.
+\\ \medskip
+Moreover the type Fin Z is empty so that it is impossible to construct a natural number less than zero. The possibility of indexing into an empty vector falls out of this construction. 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Dependent pairs use cases}
+In particular when dealing with user input, 
+there will often be some properties of the data that we
+cannot know until runtime.
+\\ \medskip
+The length of a vector is one example: once you have read the
+vector, you know its length, and from there you can check it and reason about how it relates to other data.\\ \medskip
+The generic solution is provided by dependent pairs.
+\end{frame}
+
+\begin{frame}
+\frametitle{Inferring Vect length via dependent pairs}
+\idrisinput{my-code/read-vect-dep-pair.idr}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}%DEMO-TIME}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\includegraphics[height=1\textwidth,width=1\textwidth]{img/idris-toon.eps}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+	    % only if I've some time left
+    \end{column}
+\end{columns}
+\end{frame}

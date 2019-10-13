@@ -1,0 +1,235 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section 1
+\section{Type Theory and Curry-Howard Isomorphism}
+
+
+\begin{frame}
+\frametitle{Mathematical proofs for formal verification of software}
+A formal verification, or certification, of a computer program is a formalized guarantee – \textbf{a proof!} – that the program satisfies given specified properties.
+% For instance, it could be guaranteed to compute a given output based on a given input, or to always terminate, or to not include a certain kind of security hole.
+\\ \medskip
+\textbf{Certification can take the form of a proof that a program has a specified type} when interpreted as a term of some sort\\
+%(by Curry Howard isomorphism). 
+\end{frame}
+
+
+\begin{frame}
+\textcolor{red}{Model checking} and \textcolor{red}{Type Systems} are the two prevalent approaches to program verification. 
+\end{frame}
+
+% Let me now do a step behind to give you some required background
+% and to let this presentation fits the topics we saw during the course
+
+
+\begin{frame}
+\frametitle{Model Checking vs Type systems - Definitions}
+\begin{definition}[Model Checking]
+ \textcolor{red}{Model checking} is a \textbf{formal} verification technique which allows for properties of a given system to be verified \textbf{through a systematic inspection of all the states of the model} used to represent the system.	
+\end{definition}
+\pause
+\begin{definition}[Type System]
+	\textcolor{red}{Type Systems} are a \textbf{set of rules} that assigns a property called type to the various constructs of a computer program.\\
+	Types formalize and enforce implicit categories which programmers use for data structures and other program components.
+\end{definition}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Model Checking vs Type systems - Comparison}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
+	  \item model checking is performed in a \textbf{semantic and whole-program style}
+	  \item model checkers are \\ \textbf{flow sensitive}.
+	   %These algorithms are usually based on the exploration of the reachable state-space of a model of the program execution.
+	  \item model checkers are good at explaining \textbf{why a program is rejected}. 
+	  %The model checker provides a counterexample which is a program trace (keywords: semantic, whole-program) that explains why the program was rejected
+    \end{itemize}  
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
+    	\item type systems are defined in a \textbf{syntactic and modular style}
+    	% providing one type rule per syntactic construct.
+    	\item type systems are \textbf{flow-insensitive}.
+    	\item type systems are good at explaining \textbf{why a program is accepted}.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The need of expressive languages}
+Languages based on \textbf{highly expressive type theories} are a natural framework to do certified programming “natively”.
+\\ \medskip
+Programming in such rich languages is equivalent to build proofs in certain corresponding logical frameworks.
+\\ \medskip
+Using this means programs and their certification proof are written at the same time. \\
+We do not have to use any other external piece of code.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{A gap to bridge: How to relate type systems to formal verification?}
+\textbf{}
+\\ \medskip
+How can we make type systems a tool able to produce certified software?
+\end{frame}
+
+\begin{frame}
+\frametitle{Curry Howard Isomorphism}
+\textcolor{red}{Curry-Howard isomorphism} justifies the usage of type theories as a formal tool in the practical context of formal programming.
+\\ \medskip
+The Curry-Howard isomorphism states \textbf{the intimate correspondence} between
+\begin{itemize}
+  \item \textbf{$\lambda$-calculus}, the model of computation exploited in type theory
+  \item \textbf{systems of formal logic} encountered in proof theory 
+\end{itemize} 
+\medskip
+\pause
+The correspondence at the syntactic level ensures these equivalences:
+\begin{itemize}
+	\frametitle{Curry-Howad Isomorphism}
+	\item formula/propositions $ \Leftrightarrow $ types
+	\item proofs $ \Leftrightarrow $ terms/programs
+	\item proof normalization $ \Leftrightarrow $ term reduction
+	\item provability $ \Leftrightarrow $ inhabitation
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{We accept the "Propositions-as-Types" assumption}
+\begin{block}{Propositions-as-Types}
+\begin{itemize}
+	\item A constructive proof of a formula is itself a program
+	\item Propositions are Types
+	\item Proofs are Terms
+\end{itemize}
+\end{block} 
+This means that the standard in literature \textbf{type judgement}: 
+\[ \varGamma, M : A \] 
+can be interpreted in the two following ways:
+\begin{itemize}
+\item in the context $\varGamma$, A is a type and M is a program of type A
+\item in the model $\varGamma$, A is a proposition and M is a proof of A
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The correspondence at the level of formulas \& types}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Logic side} & \textbf{Programming side}\\
+\hline
+implication & function type \\
+\hline
+conjunction & product type \\
+\hline
+disjunction & sum type \\
+\hline
+true formula & unit type \\
+\hline
+false formula &	bottom type \\
+\hline
+\end{tabular}
+\end{center}
+\textbf{Simply typed $\lambda$-calculus fully corresponds to\\ (First Order) Propositional Calculus}.\\
+(where conjunction and disjunction may be derived from implication)
+\end{frame}
+
+\begin{frame}
+\frametitle{Simply typed $\lambda$-calculus is not enough}
+The logic system we got using simply typed $\lambda$-calculus is not enough.\\
+We need \textbf{more refined type theories} to get more expressive logics via Curry Howard.
+\end{frame}
+
+% formally typed lambda calculus can be seen as a formal language with two sorts: terms and types
+\begin{frame}
+\frametitle{Increasing Expressiveness of type systems} 
+\begin{itemize}
+	\item Simply typed $ \lambda $ calculus ($\lambda \rightarrow $ ) \\
+		  where \textbf{terms may depend on terms}. \\
+		  The only abstraction we have is \textbf{function abstraction}
+	\pause
+	\item Polymorphism ($\lambda P$ )\\ 
+		  where \textbf{terms may depend on types}.\\
+		  The newly introduced abstraction are \textbf{parametric polymorphic types}.
+	\pause
+	\item Type Operators ($\lambda 2 $ )\\
+		  where \textbf{types may depend on types}.\\
+		  The newly introduced abstraction are \textbf{type constructors}.
+\end{itemize}
+\end{frame}
+
+% Let's see a third way to augment the expressiveness of a type system
+
+\begin{frame}
+\frametitle{Dependent Types}
+	\begin{definition}[Dependent Types]
+		\textcolor{red}{Dependent types} are types that depend on values.
+	\end{definition}
+\medskip
+From this simple definition follows that by using dependent types
+\textbf{we will be able to encode arbitrary mathematical propositions}.
+\\ \medskip
+\pause
+Some basic classic examples of types that can be expressed are:
+\begin{itemize}
+	\item fixed length lists.
+	\item set $A \subseteq \mathbb{N}$ of all the $a \leq k$, $a,k \in \mathbb{N} $.
+	%\varsubsetneq\item functions which return the max of two given numbers.
+	\item [$\star$] \textbf{programs which implement a particular specification.}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The correspondence at the level of formulas \& types ($\lambda \Pi)$}
+\begin{tabular}{|c|c|}
+	\hline 
+	\textbf{Logic side} & \textbf{Programming side}\\
+	\hline
+	implication & function type \\
+	\hline
+	conjunction & product type \\
+	\hline
+	disjunction & sum type \\
+	\hline
+	true formula & unit type \\
+	\hline
+	false formula &	bottom type \\
+	\hline
+	\textcolor{red}{universal quantification} &	\textcolor{red}{dependent product type ($\Pi$ type)} \\
+	\hline
+	\textcolor{red}{existential quantification} & \textcolor{red}{dependent sum type ($\varSigma$ type)} \\
+	\hline
+\end{tabular}
+\\ \medskip \medskip
+\textcolor{red}{Dependent types lift the isomorphism up to First-order predicate logic.}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}
+\frametitle{Type theories: programming languages and logic systems}
+The Curry–Howard correspondence implies that types can be constructed so as to express arbitrarily complex mathematical properties.
+\\ \medskip
+A type checker of a dependent type system \textbf{can check for software properties statically at compile time}.
+%\\ \medskip
+%Moreover since every formalism is based on an \textbf{intuistionistic} theory, every time we want to prove a theorem we must provide a witness of that proof which in the end will be a working program.
+%\\ \medskip
+%The proof checking feature makes dependently typed languages closely related to \textbf{proof assistants}. 
+\\ \medskip
+The code-generation feature provided by these languages gives a powerful approach to formal program verification and \textbf{proof-carrying code},
+since the code is derived directly from a mechanically verified mathematical proof.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

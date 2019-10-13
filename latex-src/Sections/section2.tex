@@ -1,0 +1,77 @@
+% now that we have justified why we can use types to do 
+% formal verified programming
+% lets see what dependent types are in theory and in practice 
+
+% Section 2
+\section{Dependent Types theory}
+
+
+\begin{frame}
+\frametitle{Dependent Types Theory MVPs: $\Pi$-type \& $\Sigma$-type}
+\textcolor{red}{Dependent types are families of types which vary over the elements (terms) of some other type.}
+\\ \medskip
+The two principal instances of dependent types are \textbf{dependent functions} ($\Pi$-types ) and \textbf{dependent pairs} ($\Sigma$-type).
+\\ \medskip
+The terms of a $\Pi$-type are type functions whose codomain type can vary depending on the element of the domain to which the function is applied
+\\ \medskip
+$\Sigma$-types are a generalization of product types in which the type of the second component of the pair is allowed to vary dependending on the value of the first component.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Dependent Function ($\Pi$-type) - Notation}
+Dependent function types are similar to the type of an indexed family of sets.\\ \medskip
+Formally, given a type $\pmb{A:\mathcal{U}}$ in a universe of types $\pmb{\mathcal{U}}$, \\ 	
+one may have a family of types $\pmb{B : A \rightarrow \mathcal{U}}$ which assigns to each term $\pmb{a: A}$ a type $\pmb{B(a): \mathcal{U}}$.\\ \medskip
+We say that type $\pmb{B(a)}$ depends on the term a.\\ \medskip
+Dependent function types are written as: $\pmb{\prod_{x:A} B(x)}$ \\ \medskip
+If $\pmb{B : A \rightarrow \mathcal{U}}$ is a constant function, then the dependent function type is equivalent to an ordinary function type.\\ \medskip
+It follows that $\Pi$-type is the generalization of function types.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Dependent Pair ($\Sigma$-type) - Notation}
+The dual of the dependent function type is the dependent pair type. In set theory it corresponds to an indexed sum (disjoint union) of types.\\ 
+\medskip 
+In the universe of types $\pmb{\mathcal{U}}$ there is a type $\pmb{A:\mathcal{U}}$ and a family of types $\pmb{B : A \rightarrow \mathcal{U}}$\\
+then there is a dependent pair type
+$\pmb{\sum_{x:A}B(x)}$.\\ \medskip
+The dependent pair type captures the idea of a pair where the type of the second term is dependent on the value of the first.\\
+If $\pmb{(a,b):\sum_{x:A}B(x)}$
+then $\pmb{a:A}$ and $\pmb{b:B(a)}$.\\ \medskip
+If B is a constant function, then the dependent pair type is the ordinary (Cartesian) product type $\pmb{A×B}$
+\end{frame}
+%A dependent pair may be used to pair an array with its length in a type-safe way.
+
+ 
+\begin{frame}
+\frametitle{$\Pi$-type and $\Sigma$-type examples}
+\begin{itemize}
+	\item[$\Pi$)] let $\pmb{Vect(\mathbb{R}, k)}$ be the type of k-tuples of real numbers, then
+	\[\pmb{\prod_{n:\mathbb{N}}Vect(\mathbb{R}, n)}\]
+	would be the type of a dependent function which, given a natural number n, returns the type of tuples of reals of size n.
+	
+	\item[$\Sigma$)] let $\pmb{OrdPair(a,b)}$ be the type of pairs where the first element is less than the second element, then \[\pmb{\sum_{(a,b) : \mathbb{N} \times \mathbb{N}} \mathtt{Less}(a,b)}\]
+	 would be the type of a dependent pair which couples two natural numbers a and b with a proof of $\pmb{a<b}$
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{$\Pi$-type and $\Sigma$-type can be interpreted in two ways}
+By \textbf{propositions-as-types} assumption
+\begin{itemize}
+	\item \textcolor{red}{$\Pi$-types can be interpreted as universal quantifiers $\forall$}.
+	\item \textcolor{red}{$\Sigma$-types can be interpreted as existential quantifiers $\exists$.}
+\end{itemize}
+So every dependent type can be read either as a proposition or as a set. This gives us two readings:
+\begin{enumerate}
+	\item
+	a dependent type $\pmb{P:\mathbb{N} \rightarrow \mathcal{U}}$ is like a family of sets $\pmb{P(0), P(1), P(2), \ldots}$
+	\item
+	a dependent type $\pmb{P:\mathbb{N} \rightarrow \mathcal{U}}$ is a property of natural numbers where we think of $\pmb{P(n)}$ as the proofs that $\pmb{n}$ has property $\pmb{P}$
+\end{enumerate}
+\end{frame}
+
+% Dependent type systems are heavily used for software certification.\\

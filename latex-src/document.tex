@@ -1,0 +1,75 @@
+\documentclass{beamer}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc} 	
+\usepackage{caption}
+\usepackage{adjustbox}
+\usepackage{my-packages/idrislang}
+
+% Title format
+\title{Dependent Types}
+\subtitle{A quest in proving software properties at compile time}
+\titlegraphic{\includegraphics[height=1.5cm, width=1.5cm]{img/cherubino_unipi.eps}}
+\author{Lapo Toloni}
+\institute{Seminar for the course Software Verification and Validation.\\ MsC in Computer Science, Università di Pisa, a.a. 2018/2019}
+\date{29th, April 2019}
+
+% Theme definition
+\usetheme{Berlin} 
+\useinnertheme{rounded}
+\useoutertheme{miniframes} 
+\setbeamercovered{dynamic}
+
+% Set theorem style
+\theoremstyle{definition}
+\newtheorem{claim}{Claim:}
+
+%%%%%%%%%%%%%%%%%%%%
+%% Starting point %%
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	
+% First slide: Frontmatter
+\begin{frame}
+\maketitle
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INDEX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Indice}
+%\tableofcontents
+%\end{frame}
+
+% BLUE-BLOCK \begin{block}{titolo}\end{block} 
+% GREEN-BLOCK exampleblock
+% RED-BLOCK alertblock
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% INCLUDE SECTIONS PART %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{Sections/section1}
+\include{Sections/section2}
+\include{Sections/section3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{} % or \section*{}
+\begin{frame}
+\frametitle{References}
+\begin{enumerate}
+	\item Edwin Brady - Type-Driven Development with Idris (Manning, 2017) 
+	\item Nordström, Petersson, Smith - Programming in Martin-Löf's Type Theory
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+Thanks for the attention! \\ \medskip
+Any question?
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
